@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "129293850733",
+    "project_id": "examenfinal-d4a75",
+    "storage_bucket": "examenfinal-d4a75.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:129293850733:android:4545787a6bc4cee69f8764",
+        "android_client_info": {
+          "package_name": "com.hellokh.sovary.examenfinal"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "129293850733-qb1kv5edjc6pkjols155qmtqmd4ts3ss.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA3zDWe6P_oGZJZz4pJjfKC4ba9j4ih47M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "129293850733-qb1kv5edjc6pkjols155qmtqmd4ts3ss.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
