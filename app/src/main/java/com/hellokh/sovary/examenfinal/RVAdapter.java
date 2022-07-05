@@ -1,6 +1,8 @@
 package com.hellokh.sovary.examenfinal;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,37 +56,38 @@ public class RVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
         vh.lblMesa.setText(m.getNumero());
         vh.lblOcupado.setText(ocupado);
-        vh.txt_option.setOnClickListener(v->
-        {
-            PopupMenu popupMenu =new PopupMenu(context,vh.txt_option);
-            popupMenu.inflate(R.menu.option_menu);
-            popupMenu.setOnMenuItemClickListener(item->
-            {
-                switch (item.getItemId())
-                {
-                    case R.id.menu_remove:
-                        com.hellokh.sovary.examenfinal.DAOMesa dao=new com.hellokh.sovary.examenfinal.DAOMesa();
-                        dao.remove(m.getKey()).addOnSuccessListener(suc->
-                        {
-                            Toast.makeText(context, "Cliente atendido", Toast.LENGTH_SHORT).show();
-                            notifyItemRemoved(position);
-                            list.remove(m);
-                        }).addOnFailureListener(er->
-                        {
-                            Toast.makeText(context, ""+er.getMessage(), Toast.LENGTH_SHORT).show();
-                        });
-
-                        break;
-                }
-                return false;
-            });
-            popupMenu.show();
-        });
     }
 
     @Override
     public int getItemCount()
     {
         return list.size();
+    }
+
+    public void removeLastItem(){
+        if(list == null || list.isEmpty()) return;
+
+        int position = list.size()-1;
+        Mesa m = list.get(position);
+
+        com.hellokh.sovary.examenfinal.DAOMesa dao=new com.hellokh.sovary.examenfinal.DAOMesa();
+        dao.remove(m.getKey()).addOnSuccessListener(suc->
+        {
+            Toast.makeText(context, "Cliente atendido", Toast.LENGTH_SHORT).show();
+            notifyItemRemoved(position);
+            list.remove(m);
+
+            //Con esto podriamos mandar la mesa que se está borrando para poder activar de nuevo el boton
+            //Lo que pasa es que esto abre otra actividad, y por defecto todos los botones están habilitados
+            //Entonces no tiene mucho sentido, igual lo dejo aqui por cualquier vara
+            //Hay que encontrar la forma de enviar datos a la otra actividad sin necesidad de abrir una nueva
+            /*Intent intent = new Intent(context, MainActivity.class);
+            intent.putExtra("MESA",m);
+            context.startActivity(intent);*/
+
+        }).addOnFailureListener(er->
+        {
+            Toast.makeText(context, ""+er.getMessage(), Toast.LENGTH_SHORT).show();
+        });
     }
 }

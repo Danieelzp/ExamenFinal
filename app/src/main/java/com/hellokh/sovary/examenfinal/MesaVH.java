@@ -8,12 +8,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class MesaVH extends RecyclerView.ViewHolder
 {
-    public TextView lblMesa, lblOcupado, txt_option;
+    public TextView lblMesa, lblOcupado;
     public MesaVH(@NonNull View itemView)
     {
         super(itemView);
         lblMesa = itemView.findViewById(R.id.lblMesa);
         lblOcupado = itemView.findViewById(R.id.lblOcupado);
-        txt_option = itemView.findViewById(R.id.txt_option);
     }
 }

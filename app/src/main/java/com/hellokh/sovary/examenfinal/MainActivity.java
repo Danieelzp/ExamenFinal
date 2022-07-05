@@ -43,6 +43,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Mesa numMesa = (Mesa)getIntent().getSerializableExtra("MESA");
+
         recyclerView = findViewById(R.id.rv);
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager manager = new LinearLayoutManager(this);
@@ -62,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
         Button btnMesa6 = findViewById(R.id.btn_mesa6);
         Button btnMesa7 = findViewById(R.id.btn_mesa7);
         Button btnMesa8 = findViewById(R.id.btn_mesa8);
+        Button btnAtender = findViewById(R.id.btn_atender);
 
         btnMesa1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -150,6 +153,19 @@ public class MainActivity extends AppCompatActivity {
                 btnMesa8.setEnabled(false);
             }
         });
+
+        btnAtender.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                adapter.removeLastItem();
+            }
+        });
+
+        //Este numMesa es el intent con el dato de la mesa que se está borrando en RVAdapter
+        //Pero creo que no podemos hacerlo así por lo que comento allá al otro lado, entonces hay que ver
+        /*if(numMesa != null){
+            btnMesa1.setEnabled(true);
+        }*/
     }
 
     private void loadData() {
