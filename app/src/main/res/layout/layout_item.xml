@@ -29,8 +29,8 @@
         android:orientation="horizontal">
 
         <ImageView
-            android:layout_width="64dp"
-            android:layout_height="56dp"
+            android:layout_width="44dp"
+            android:layout_height="match_parent"
             android:padding="5dp"
             android:src="@drawable/ic_baseline_food_bank_24" />
 

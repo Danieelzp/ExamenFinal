@@ -19,6 +19,7 @@
 
             <Button
                 android:id="@+id/btn_mesa1"
+                android:enabled="true"
                 android:text="Mesa 1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -27,6 +28,7 @@
 
             <Button
                 android:id="@+id/btn_mesa2"
+                android:enabled="true"
                 android:text="Mesa 2"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -43,6 +45,7 @@
 
             <Button
                 android:id="@+id/btn_mesa3"
+                android:enabled="true"
                 android:text="Mesa 3"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -51,6 +54,7 @@
 
             <Button
                 android:id="@+id/btn_mesa4"
+                android:enabled="true"
                 android:text="Mesa 4"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -67,6 +71,7 @@
 
             <Button
                 android:id="@+id/btn_mesa5"
+                android:enabled="true"
                 android:text="Mesa 5"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -75,6 +80,7 @@
 
             <Button
                 android:id="@+id/btn_mesa6"
+                android:enabled="true"
                 android:text="Mesa 6"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -91,6 +97,7 @@
 
             <Button
                 android:id="@+id/btn_mesa7"
+                android:enabled="true"
                 android:text="Mesa 7"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -99,6 +106,7 @@
 
             <Button
                 android:id="@+id/btn_mesa8"
+                android:enabled="true"
                 android:text="Mesa 8"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -115,6 +123,7 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv"
+            android:layout_marginTop="16dp"
             android:layout_width="match_parent"
             android:layout_height="325dp">
         </androidx.recyclerview.widget.RecyclerView>

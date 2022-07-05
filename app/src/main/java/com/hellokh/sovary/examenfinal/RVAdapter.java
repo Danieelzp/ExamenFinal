@@ -66,7 +66,7 @@ public class RVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                         com.hellokh.sovary.examenfinal.DAOMesa dao=new com.hellokh.sovary.examenfinal.DAOMesa();
                         dao.remove(m.getKey()).addOnSuccessListener(suc->
                         {
-                            Toast.makeText(context, "Registro eliminado", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, "Cliente atendido", Toast.LENGTH_SHORT).show();
                             notifyItemRemoved(position);
                             list.remove(m);
                         }).addOnFailureListener(er->
