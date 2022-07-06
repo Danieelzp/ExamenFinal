@@ -44,7 +44,7 @@ public class RVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position, Mesa e) {
         com.hellokh.sovary.examenfinal.MesaVH vh = (com.hellokh.sovary.examenfinal.MesaVH) holder;
-        Mesa m = e == null ? list.get(position) : e;
+        Mesa m = e == null ? list.get(getItemCount() - position - 1) : e;
 
         String ocupado;
         if (m.isOcupado()) {
@@ -71,7 +71,7 @@ public class RVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         if (list == null || list.isEmpty()) return;
 
         int position = list.size() - 1;
-        Mesa m = list.get(position);
+        Mesa m = list.get(getItemCount() - position - 1);
 
         com.hellokh.sovary.examenfinal.DAOMesa dao = new com.hellokh.sovary.examenfinal.DAOMesa();
         dao.remove(m.getKey()).addOnSuccessListener(suc ->

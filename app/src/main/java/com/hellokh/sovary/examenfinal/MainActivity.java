@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     DAOMesa dao;
     boolean isLoading = false;
     String key = null;
+    ArrayList<Mesa> ms;
 
     private FirebaseStorage storage;
     private StorageReference mStorageRef;
@@ -48,14 +49,14 @@ public class MainActivity extends AppCompatActivity {
     Button btnMesa6;
     Button btnMesa7;
     Button btnMesa8;
-    HashMap<Integer,Button> map = new HashMap<Integer,Button>();
+    HashMap<Integer, Button> map = new HashMap<Integer, Button>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Mesa numMesa = (Mesa)getIntent().getSerializableExtra("MESA");
+        Mesa numMesa = (Mesa) getIntent().getSerializableExtra("MESA");
 
         recyclerView = findViewById(R.id.rv);
         recyclerView.setHasFixedSize(true);
@@ -78,14 +79,14 @@ public class MainActivity extends AppCompatActivity {
         btnMesa8 = findViewById(R.id.btn_mesa8);
         Button btnAtender = findViewById(R.id.btn_atender);
 
-        map.put(1,btnMesa1);
-        map.put(2,btnMesa2);
-        map.put(3,btnMesa3);
-        map.put(4,btnMesa4);
-        map.put(5,btnMesa5);
-        map.put(6,btnMesa6);
-        map.put(7,btnMesa7);
-        map.put(8,btnMesa8);
+        map.put(1, btnMesa1);
+        map.put(2, btnMesa2);
+        map.put(3, btnMesa3);
+        map.put(4, btnMesa4);
+        map.put(5, btnMesa5);
+        map.put(6, btnMesa6);
+        map.put(7, btnMesa7);
+        map.put(8, btnMesa8);
         loadData();
 
 
@@ -184,8 +185,8 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onCallback(Mesa mesa) {
                         Log.i("MyCallback", "Callback Numero Mesa: " + mesa.getNumero());
-                        for(Map.Entry<Integer,Button> entry : map.entrySet()){
-                            if(entry.getKey().equals(Integer.parseInt(mesa.getNumero()))){
+                        for (Map.Entry<Integer, Button> entry : map.entrySet()) {
+                            if (entry.getKey().equals(Integer.parseInt(mesa.getNumero()))) {
                                 entry.getValue().setEnabled(true);
                             }
                         }
@@ -201,18 +202,27 @@ public class MainActivity extends AppCompatActivity {
         }*/
     }
 
+    public boolean exists(Mesa m) {
+        for (Mesa mesa : ms) {
+            if (mesa.getNumero().equals(m.getNumero())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     private void loadData() {
         dao.get(key).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                ArrayList<Mesa> ms = new ArrayList<>();
+                ms = new ArrayList<>();
                 for (DataSnapshot data : snapshot.getChildren()) {
                     Mesa m = data.getValue(Mesa.class);
                     m.setKey(data.getKey());
                     ms.add(m);
-                    for(Map.Entry<Integer,Button> entry : map.entrySet()){
-                        if(entry.getKey().equals(Integer.parseInt(m.getNumero()))){
-                            if(m.isOcupado()){
+                    for (Map.Entry<Integer, Button> entry : map.entrySet()) {
+                        if (entry.getKey().equals(Integer.parseInt(m.getNumero()))) {
+                            if (m.isOcupado()) {
                                 entry.getValue().setEnabled(false);
                             }
                         }
@@ -221,8 +231,8 @@ public class MainActivity extends AppCompatActivity {
                 }
                 //Este es el método para ordenar los registros
                 //Collections.sort(ms);
-                Collections.reverse(ms); //Con este apenas se abre la app los carga al revés, pero a la hora
-                                            // de insertar se insertan normal, entonces hay que buscar otra forma
+                //Collections.reverse(ms); //Con este apenas se abre la app los carga al revés, pero a la hora
+                // de insertar se insertan normal, entonces hay que buscar otra forma
                 adapter.setItems(ms);
                 adapter.notifyDataSetChanged();
                 isLoading = false;
