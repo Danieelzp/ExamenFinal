@@ -14,43 +14,39 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-public class RVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
-{
+public class RVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private Context context;
     ArrayList<Mesa> list = new ArrayList<>();
 
-    public RVAdapter(Context ctx)
-    {
+    public RVAdapter(Context ctx) {
         this.context = ctx;
     }
-    public void setItems(ArrayList<Mesa> m)
-    {
+
+    public void setItems(ArrayList<Mesa> m) {
         list.addAll(m);
     }
 
     @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
-    {
-        View view = LayoutInflater.from(context).inflate(R.layout.layout_item,parent,false);
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(context).inflate(R.layout.layout_item, parent, false);
         return new com.hellokh.sovary.examenfinal.MesaVH(view);
     }
+
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position)
-    {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         Mesa e = null;
-        this.onBindViewHolder(holder,position,e);
+        this.onBindViewHolder(holder, position, e);
     }
 
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position, Mesa e)
-    {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position, Mesa e) {
         com.hellokh.sovary.examenfinal.MesaVH vh = (com.hellokh.sovary.examenfinal.MesaVH) holder;
-        Mesa m = e==null? list.get(position):e;
+        Mesa m = e == null ? list.get(position) : e;
 
         String ocupado;
-        if(m.isOcupado()){
+        if (m.isOcupado()) {
             ocupado = "Ocupado";
-        }else{
+        } else {
             ocupado = "Libre";
         }
 
@@ -59,23 +55,28 @@ public class RVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     }
 
     @Override
-    public int getItemCount()
-    {
+    public int getItemCount() {
         return list.size();
     }
 
-    public void removeLastItem(){
-        if(list == null || list.isEmpty()) return;
 
-        int position = list.size()-1;
+    public interface MyCallback {
+        void onCallback(Mesa mesa);
+    }
+
+    public void removeLastItem(MyCallback callback) {
+        if (list == null || list.isEmpty()) return;
+
+        int position = list.size() - 1;
         Mesa m = list.get(position);
 
-        com.hellokh.sovary.examenfinal.DAOMesa dao=new com.hellokh.sovary.examenfinal.DAOMesa();
-        dao.remove(m.getKey()).addOnSuccessListener(suc->
+        com.hellokh.sovary.examenfinal.DAOMesa dao = new com.hellokh.sovary.examenfinal.DAOMesa();
+        dao.remove(m.getKey()).addOnSuccessListener(suc ->
         {
             Toast.makeText(context, "Cliente atendido", Toast.LENGTH_SHORT).show();
             notifyItemRemoved(position);
             list.remove(m);
+            callback.onCallback(m);
 
             //Con esto podriamos mandar la mesa que se está borrando para poder activar de nuevo el boton
             //Lo que pasa es que esto abre otra actividad, y por defecto todos los botones están habilitados
@@ -85,9 +86,9 @@ public class RVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             intent.putExtra("MESA",m);
             context.startActivity(intent);*/
 
-        }).addOnFailureListener(er->
+        }).addOnFailureListener(er ->
         {
-            Toast.makeText(context, ""+er.getMessage(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "" + er.getMessage(), Toast.LENGTH_SHORT).show();
         });
     }
 }

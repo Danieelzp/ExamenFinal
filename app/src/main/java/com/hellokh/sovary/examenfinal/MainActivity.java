@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -157,7 +158,12 @@ public class MainActivity extends AppCompatActivity {
         btnAtender.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                adapter.removeLastItem();
+                adapter.removeLastItem(new RVAdapter.MyCallback() {
+                    @Override
+                    public void onCallback(Mesa mesa) {
+                        Log.i("MyCallback", "Callback Numero Mesa: " + mesa.getNumero());
+                    }
+                });
             }
         });
 
