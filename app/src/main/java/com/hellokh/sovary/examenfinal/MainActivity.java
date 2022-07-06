@@ -40,6 +40,14 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseStorage storage;
     private StorageReference mStorageRef;
     private DatabaseReference mDatabaseRef;
+    Button btnMesa1;
+    Button btnMesa2;
+    Button btnMesa3;
+    Button btnMesa4;
+    Button btnMesa5;
+    Button btnMesa6;
+    Button btnMesa7;
+    Button btnMesa8;
     HashMap<Integer,Button> map = new HashMap<Integer,Button>();
 
     @Override
@@ -60,14 +68,14 @@ public class MainActivity extends AppCompatActivity {
 
         mDatabaseRef = FirebaseDatabase.getInstance().getReference("Mesa");
 
-        Button btnMesa1 = findViewById(R.id.btn_mesa1);
-        Button btnMesa2 = findViewById(R.id.btn_mesa2);
-        Button btnMesa3 = findViewById(R.id.btn_mesa3);
-        Button btnMesa4 = findViewById(R.id.btn_mesa4);
-        Button btnMesa5 = findViewById(R.id.btn_mesa5);
-        Button btnMesa6 = findViewById(R.id.btn_mesa6);
-        Button btnMesa7 = findViewById(R.id.btn_mesa7);
-        Button btnMesa8 = findViewById(R.id.btn_mesa8);
+        btnMesa1 = findViewById(R.id.btn_mesa1);
+        btnMesa2 = findViewById(R.id.btn_mesa2);
+        btnMesa3 = findViewById(R.id.btn_mesa3);
+        btnMesa4 = findViewById(R.id.btn_mesa4);
+        btnMesa5 = findViewById(R.id.btn_mesa5);
+        btnMesa6 = findViewById(R.id.btn_mesa6);
+        btnMesa7 = findViewById(R.id.btn_mesa7);
+        btnMesa8 = findViewById(R.id.btn_mesa8);
         Button btnAtender = findViewById(R.id.btn_atender);
 
         map.put(1,btnMesa1);
@@ -79,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
         map.put(7,btnMesa7);
         map.put(8,btnMesa8);
         loadData();
+
 
         btnMesa1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -201,6 +210,13 @@ public class MainActivity extends AppCompatActivity {
                     Mesa m = data.getValue(Mesa.class);
                     m.setKey(data.getKey());
                     ms.add(m);
+                    for(Map.Entry<Integer,Button> entry : map.entrySet()){
+                        if(entry.getKey().equals(Integer.parseInt(m.getNumero()))){
+                            if(m.isOcupado()){
+                                entry.getValue().setEnabled(false);
+                            }
+                        }
+                    }
                     key = data.getKey();
                 }
                 //Este es el método para ordenar los registros
