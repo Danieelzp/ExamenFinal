@@ -2,6 +2,7 @@ package com.hellokh.sovary.examenfinal;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,9 +11,11 @@ import android.widget.PopupMenu;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class RVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private Context context;
@@ -50,7 +53,7 @@ public class RVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             ocupado = "Libre";
         }
 
-        vh.lblMesa.setText(m.getNumero());
+        vh.lblMesa.setText("Mesa " + m.getNumero());
         vh.lblOcupado.setText(ocupado);
     }
 

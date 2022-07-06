@@ -26,6 +26,8 @@ import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -38,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseStorage storage;
     private StorageReference mStorageRef;
     private DatabaseReference mDatabaseRef;
+    HashMap<Integer,Button> map = new HashMap<Integer,Button>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
         adapter = new RVAdapter(this);
         recyclerView.setAdapter(adapter);
         dao = new DAOMesa();
-        loadData();
+
 
         mDatabaseRef = FirebaseDatabase.getInstance().getReference("Mesa");
 
@@ -67,10 +70,20 @@ public class MainActivity extends AppCompatActivity {
         Button btnMesa8 = findViewById(R.id.btn_mesa8);
         Button btnAtender = findViewById(R.id.btn_atender);
 
+        map.put(1,btnMesa1);
+        map.put(2,btnMesa2);
+        map.put(3,btnMesa3);
+        map.put(4,btnMesa4);
+        map.put(5,btnMesa5);
+        map.put(6,btnMesa6);
+        map.put(7,btnMesa7);
+        map.put(8,btnMesa8);
+        loadData();
+
         btnMesa1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Mesa m = new Mesa("Mesa 1", true);
+                Mesa m = new Mesa("1", true);
                 String dhId = mDatabaseRef.push().getKey();
                 mDatabaseRef.child(dhId).setValue(m);
                 loadData();
@@ -81,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
         btnMesa2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Mesa m = new Mesa("Mesa 2", true);
+                Mesa m = new Mesa("2", true);
                 String dhId = mDatabaseRef.push().getKey();
                 mDatabaseRef.child(dhId).setValue(m);
                 loadData();
@@ -92,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
         btnMesa3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Mesa m = new Mesa("Mesa 3", true);
+                Mesa m = new Mesa("3", true);
                 String dhId = mDatabaseRef.push().getKey();
                 mDatabaseRef.child(dhId).setValue(m);
                 loadData();
@@ -103,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
         btnMesa4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Mesa m = new Mesa("Mesa 4", true);
+                Mesa m = new Mesa("4", true);
                 String dhId = mDatabaseRef.push().getKey();
                 mDatabaseRef.child(dhId).setValue(m);
                 loadData();
@@ -114,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
         btnMesa5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Mesa m = new Mesa("Mesa 5", true);
+                Mesa m = new Mesa("5", true);
                 String dhId = mDatabaseRef.push().getKey();
                 mDatabaseRef.child(dhId).setValue(m);
                 loadData();
@@ -125,7 +138,7 @@ public class MainActivity extends AppCompatActivity {
         btnMesa6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Mesa m = new Mesa("Mesa 6", true);
+                Mesa m = new Mesa("6", true);
                 String dhId = mDatabaseRef.push().getKey();
                 mDatabaseRef.child(dhId).setValue(m);
                 loadData();
@@ -136,7 +149,7 @@ public class MainActivity extends AppCompatActivity {
         btnMesa7.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Mesa m = new Mesa("Mesa 7", true);
+                Mesa m = new Mesa("7", true);
                 String dhId = mDatabaseRef.push().getKey();
                 mDatabaseRef.child(dhId).setValue(m);
                 loadData();
@@ -147,7 +160,7 @@ public class MainActivity extends AppCompatActivity {
         btnMesa8.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Mesa m = new Mesa("Mesa 8", true);
+                Mesa m = new Mesa("8", true);
                 String dhId = mDatabaseRef.push().getKey();
                 mDatabaseRef.child(dhId).setValue(m);
                 loadData();
@@ -162,6 +175,11 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onCallback(Mesa mesa) {
                         Log.i("MyCallback", "Callback Numero Mesa: " + mesa.getNumero());
+                        for(Map.Entry<Integer,Button> entry : map.entrySet()){
+                            if(entry.getKey().equals(Integer.parseInt(mesa.getNumero()))){
+                                entry.getValue().setEnabled(true);
+                            }
+                        }
                     }
                 });
             }
@@ -186,8 +204,8 @@ public class MainActivity extends AppCompatActivity {
                     key = data.getKey();
                 }
                 //Este es el método para ordenar los registros
-                Collections.sort(ms);
-                //Collections.reverse(ms); //Con este apenas se abre la app los carga al revés, pero a la hora
+                //Collections.sort(ms);
+                Collections.reverse(ms); //Con este apenas se abre la app los carga al revés, pero a la hora
                                             // de insertar se insertan normal, entonces hay que buscar otra forma
                 adapter.setItems(ms);
                 adapter.notifyDataSetChanged();
